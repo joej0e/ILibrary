@@ -1,11 +1,11 @@
 package spring.service.impl;
 
-import mate.academy.spring.dao.BookDao;
-import mate.academy.spring.entity.Book;
-import mate.academy.spring.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import spring.dao.BookDao;
+import spring.entity.Book;
+import spring.service.BookService;
 
 import java.util.List;
 
@@ -17,14 +17,25 @@ public class BookServiceImpl implements BookService {
 
     @Transactional
     @Override
-    public void add(Book book) {
-        bookDao.add(book);
+    public Book add(Book book) {
+        return bookDao.add(book);
+    }
+
+    @Override
+    public Book get(Long id) {
+        return bookDao.get(id);
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<Book> listBooks() {
         return bookDao.listBooks();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Book> findByTitle(String title) {
+        return bookDao.findBooksByTitle(title);
     }
 }
 
