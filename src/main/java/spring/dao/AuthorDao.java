@@ -11,4 +11,3 @@ public interface AuthorDao {
     List<Author> listAuthors();
 
 }
-

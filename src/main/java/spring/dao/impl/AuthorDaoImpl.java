@@ -24,9 +24,7 @@ public class AuthorDaoImpl implements AuthorDao {
 
     @Override
     public List<Author> listAuthors() {
-        @SuppressWarnings("unchecked")
-        TypedQuery<Author> query = sessionFactory.getCurrentSession().createQuery("from User");
+        TypedQuery<Author> query = sessionFactory.getCurrentSession().createQuery("from Author", Author.class);
         return query.getResultList();
     }
 }
-

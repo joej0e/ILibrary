@@ -56,17 +56,23 @@ public class MainApp {
         libraryService.setBookAuthor(fight_club, chuck_palahniuk);
 
         libraryService.rentBook(lyly, catcher_in_the_rye);
+        libraryService.rentBook(lyly, catcher_in_the_rye);
+        libraryService.rentBook(lyly, catcher_in_the_rye);
         libraryService.rentBook(john, fahrenheit_451);
         libraryService.rentBook(kevin, fahrenheit_451);
 
+        /*
         libraryService.returnBook(lyly, catcher_in_the_rye);
         libraryService.returnBook(john, fahrenheit_451);
         libraryService.returnBook(kevin, fahrenheit_451);
 
+         */
+
         libraryService.getBooksRentByUser(lyly);
 
-        List<Book> books = libraryService.findBooksByAuthor("Jerome David", "Salinger");
+        List<Book> books = libraryService.findBooksByAuthor("Jerome", "Salinger");
 
+        System.out.println(books.get(0).getTitle());
         List<Book> books1 = libraryService.findBooksByAuthor("Bradbury");
 
         context.close();

@@ -2,7 +2,6 @@ package spring.service;
 
 import spring.entity.Author;
 import spring.entity.Book;
-import spring.entity.Rent;
 import spring.entity.User;
 
 import java.util.List;
@@ -21,5 +20,3 @@ public interface LibraryService {
 
     List<Book> findBooksByAuthor(String name, String surname);
 }
-
-

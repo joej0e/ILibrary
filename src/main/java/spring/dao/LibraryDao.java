@@ -20,5 +20,3 @@ public interface LibraryDao {
 
     List<Book> findBooksByAuthor(String name, String surname);
 }
-
-

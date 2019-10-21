@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import spring.dao.BookDao;
 import spring.entity.Book;
 
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -36,17 +35,14 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public List<Book> listBooks() {
-        @SuppressWarnings("unchecked")
-        TypedQuery<Book> query = sessionFactory.getCurrentSession().createQuery("from Book");
+        TypedQuery<Book> query = sessionFactory.getCurrentSession().createQuery("from Book", Book.class);
         return query.getResultList();
     }
 
     @Override
     public List<Book> findBooksByTitle(String title) {
-        @SuppressWarnings("unchecked")
-        TypedQuery<Book> query = sessionFactory.getCurrentSession().createQuery("from Book where title = title");
+        TypedQuery<Book> query = sessionFactory.getCurrentSession().createQuery("from Book where title like title %", Book.class);
         return query.getResultList();
     }
 
 }
-

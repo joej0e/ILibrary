@@ -19,7 +19,8 @@ public class LibraryDaoImpl implements LibraryDao {
 
     @Override
     public List<Book> getBooksRentByUser(User user) {
-        Query queryGetBooks = sessionFactory.createEntityManager().createNativeQuery("select library.books.book_id," +
+        Query queryGetBooks = sessionFactory.createEntityManager()
+                .createNativeQuery("select library.books.book_id," +
                 " books.title, books.year, books.price, books.quantity from books" +
                 " inner join rents on rents.book_id = books.book_id " +
                 " where user_id = " + user.getId(), Book.class);
@@ -29,32 +30,35 @@ public class LibraryDaoImpl implements LibraryDao {
     @Override
     public void returnBook(User user, Book book) {
         Integer quantity = book.getQuantity();
-        book.getUsers().remove(user);
+        user.getBooks().remove(book);
         book.setQuantity(quantity + 1);
         sessionFactory.getCurrentSession().update(book);
+        sessionFactory.getCurrentSession().update(user);
     }
 
     @Override
     public void rentBook(User user, Book book) {
         Integer quantity = book.getQuantity();
         if(quantity > 0) {
-            book.getUsers().add(user);
-            book.setQuantity(quantity - 1);
-            sessionFactory.getCurrentSession().update(book);
-        } else {
-            System.out.println("Book isn't available!");
+            if (!user.getBooks().contains(book)) {
+                user.getBooks().add(book);
+                book.setQuantity(quantity - 1);
+                sessionFactory.getCurrentSession().update(book);
+                sessionFactory.getCurrentSession().update(user);
+            }
         }
     }
 
     @Override
     public List<Book> findBooksByAuthor(String name, String surname) {
-        Query queryGetBooks = sessionFactory.createEntityManager().createNativeQuery("select library.books.book_id," +
+        Query queryGetBooks = sessionFactory.createEntityManager()
+                .createNativeQuery("select library.books.book_id," +
                 " books.title, books.year, books.price, books.quantity from books" +
                 " inner join author_book on books.book_id = author_book.book_id inner join" +
                 " authors on author_book.author_id = authors.author_id where" +
-                " name = ? and surname = ?", Book.class);
-        queryGetBooks.setParameter(1, name);
-        queryGetBooks.setParameter(2, surname);
+                        " name like ? and surname like ? ", Book.class);
+        queryGetBooks.setParameter(1, name + "%");
+        queryGetBooks.setParameter(2, surname + "%");
         return queryGetBooks.getResultList();
     }
 
@@ -64,8 +68,8 @@ public class LibraryDaoImpl implements LibraryDao {
                 " books.title, books.year, books.price, books.quantity from books" +
                 " inner join author_book on books.book_id = author_book.book_id inner join" +
                 " authors on author_book.author_id = authors.author_id where" +
-                " surname = ?", Book.class);
-        queryGetBooks.setParameter(1, surname);
+                " surname like ?", Book.class);
+        queryGetBooks.setParameter(1, surname + "%");
         return queryGetBooks.getResultList();
     }
 
@@ -75,4 +79,3 @@ public class LibraryDaoImpl implements LibraryDao {
         sessionFactory.getCurrentSession().update(book);
     }
 }
-
