@@ -1,3 +1,4 @@
+/*
 package spring.dao.impl;
 
 import org.hibernate.SessionFactory;
@@ -12,12 +13,12 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Repository
-public class LibraryDaoImpl implements LibraryDao {
+public class LibraryDaoImpl {
 
     @Autowired
     private SessionFactory sessionFactory;
 
-    @Override
+
     public List<Book> getBooksRentByUser(User user) {
         Query queryGetBooks = sessionFactory.createEntityManager()
                 .createNativeQuery("select library.books.book_id," +
@@ -27,7 +28,6 @@ public class LibraryDaoImpl implements LibraryDao {
         return queryGetBooks.getResultList();
     }
 
-    @Override
     public void returnBook(User user, Book book) {
         Integer quantity = book.getQuantity();
         user.getBooks().remove(book);
@@ -36,8 +36,7 @@ public class LibraryDaoImpl implements LibraryDao {
         sessionFactory.getCurrentSession().update(user);
     }
 
-    @Override
-    public void rentBook(User user, Book book) {
+        public void rentBook(User user, Book book) {
         Integer quantity = book.getQuantity();
         if(quantity > 0) {
             if (!user.getBooks().contains(book)) {
@@ -49,11 +48,10 @@ public class LibraryDaoImpl implements LibraryDao {
         }
     }
 
-    @Override
+
     public List<Book> findBooksByAuthor(String name, String surname) {
         Query queryGetBooks = sessionFactory.createEntityManager()
-                .createNativeQuery("select library.books.book_id," +
-                " books.title, books.year, books.price, books.quantity from books" +
+                .createNativeQuery("select * from books" +
                 " inner join author_book on books.book_id = author_book.book_id inner join" +
                 " authors on author_book.author_id = authors.author_id where" +
                         " name like ? and surname like ? ", Book.class);
@@ -62,10 +60,10 @@ public class LibraryDaoImpl implements LibraryDao {
         return queryGetBooks.getResultList();
     }
 
-    @Override
+
     public List<Book> findBooksByAuthor(String surname) {
-        Query queryGetBooks = sessionFactory.createEntityManager().createNativeQuery("select library.books.book_id," +
-                " books.title, books.year, books.price, books.quantity from books" +
+        Query queryGetBooks = sessionFactory.createEntityManager().createNativeQuery(
+                "select * from books" +
                 " inner join author_book on books.book_id = author_book.book_id inner join" +
                 " authors on author_book.author_id = authors.author_id where" +
                 " surname like ?", Book.class);
@@ -73,9 +71,12 @@ public class LibraryDaoImpl implements LibraryDao {
         return queryGetBooks.getResultList();
     }
 
-    @Override
+
     public void setBookAuthor(Book book, Author author) {
         book.getAuthors().add(author);
         sessionFactory.getCurrentSession().update(book);
     }
 }
+
+
+ */

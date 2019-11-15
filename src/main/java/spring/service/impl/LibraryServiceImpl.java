@@ -1,11 +1,10 @@
+/*
 package spring.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import spring.dao.BookDao;
 import spring.dao.LibraryDao;
-import spring.dao.UserDao;
 import spring.entity.Author;
 import spring.entity.Book;
 import spring.entity.User;
@@ -15,9 +14,6 @@ import java.util.List;
 
 @Service
 public class LibraryServiceImpl implements LibraryService {
-
-    @Autowired
-    private BookDao bookDao;
 
     @Transactional
     @Override
@@ -59,3 +55,5 @@ public class LibraryServiceImpl implements LibraryService {
     }
 }
 
+
+ */

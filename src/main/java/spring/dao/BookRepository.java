@@ -1,29 +1,22 @@
 package spring.dao;
 
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import spring.entity.Author;
 import spring.entity.Book;
-import spring.entity.User;
 
 import java.util.List;
 
 @Repository
-public interface LibraryDao {
+public interface BookRepository extends JpaRepository<Book, Long> {
 
     @Query(
             value = "select library.books.book_id," +
                     " books.title, books.year, books.price, books.quantity from books" +
                     " inner join rents on rents.book_id = books.book_id " +
                     " where user_id = ?1", nativeQuery = true)
-    List<Book> getBooksRentByUser(User user);
-
-    void returnBook(User user, Book book);
-
-    void rentBook(User user, Book book);
-
-    void setBookAuthor(Book book, Author author);
+    List<Book> getBooksRentByUser(Long userId);
 
     @Query(
             value = "select * from library.books" +
@@ -40,4 +33,9 @@ public interface LibraryDao {
                     " name like ? and surname like ?", nativeQuery = true
     )
     List<Book> findBooksByAuthor(String name, String surname);
+
+    @Query(value = "select b from Book b where b.title like ?1")
+    List<Book> findBooksByTitle(String title);
+
 }
+

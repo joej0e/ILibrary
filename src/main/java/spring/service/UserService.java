@@ -1,12 +1,16 @@
 package spring.service;
 
+
 import spring.entity.User;
+import spring.controller.dto.UserDto;
 
 import java.util.List;
 
 public interface UserService {
-    User add(User user);
 
     List<User> listUsers();
+
+    User registerNewUserAccount(UserDto accountDto);
+
 }
 

@@ -3,7 +3,7 @@
 
 <html>
 <head>
-    <title>Book info</title>
+    <title>Searching results</title>
 </head>
 <body>
 <c:forEach var="book" items="${books}">

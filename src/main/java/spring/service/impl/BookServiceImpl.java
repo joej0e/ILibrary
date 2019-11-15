@@ -1,9 +1,10 @@
 package spring.service.impl;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import spring.dao.BookDao;
+import spring.dao.BookRepository;
 import spring.entity.Book;
 import spring.service.BookService;
 
@@ -13,29 +14,29 @@ import java.util.List;
 public class BookServiceImpl implements BookService {
 
     @Autowired
-    private BookDao bookDao;
+    private BookRepository bookRepository;
 
     @Transactional
     @Override
     public Book add(Book book) {
-        return bookDao.add(book);
+        return bookRepository.save(book);
     }
 
     @Override
     public Book get(Long id) {
-        return bookDao.get(id);
+        return bookRepository.getOne(id);
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<Book> listBooks() {
-        return bookDao.listBooks();
+        return bookRepository.findAll();
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<Book> findByTitle(String title) {
-        return bookDao.findBooksByTitle(title);
+        return bookRepository.findBooksByTitle(title);
     }
 }
 
